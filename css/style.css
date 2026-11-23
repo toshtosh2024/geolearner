@@ -206,6 +206,76 @@ header {
   padding: 5px 9px;
   font-size: 13px;
 }
+/* スマホ・タブレット幅: ヘッダーの余白とボタンを詰める */
+@media (max-width: 860px) {
+  header {
+    gap: 6px;
+    padding: 6px 10px;
+  }
+  .brand {
+    font-size: 14px;
+  }
+  .brand-sub {
+    display: none;
+  }
+  header .seg button,
+  header .iconbtn {
+    padding: 4px 9px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .search input {
+    width: 160px;
+    padding: 4px 9px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+/*
+  スマホ幅: 3 段にまとめる
+  1 段目: タイトル・表示切替 ／ 2 段目: 塗り分け（横幅いっぱい）／ 3 段目: 検索・ラベル・テーマ・JA/EN
+*/
+@media (max-width: 600px) {
+  .brand {
+    order: 1;
+    font-size: 13px;
+  }
+  header .seg button {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+  #viewSeg {
+    order: 2;
+  }
+  header .spacer {
+    order: 3;
+  }
+  #modeSeg {
+    order: 5;
+    flex: 1 0 100%;
+  }
+  #modeSeg button {
+    flex: 1;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .search {
+    order: 6;
+    flex: 1;
+  }
+  .search input {
+    width: 100%;
+  }
+  #labelBtn {
+    order: 7;
+  }
+  #themeBtn {
+    order: 8;
+  }
+  #langSeg {
+    order: 9;
+  }
+}
 
 main {
   flex: 1;
