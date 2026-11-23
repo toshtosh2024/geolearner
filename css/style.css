@@ -305,25 +305,68 @@ canvas {
 }
 
 /* ---------- sidebar ---------- */
+/* サイドバーの幅 --side-w（スマホ幅では高さ --side-h）は js/resizer.js がドラッグで設定する */
 aside {
-  order: -1;
-  width: 340px;
-  flex: 0 0 340px;
+  order: -2;
+  width: var(--side-w, 340px);
+  flex: 0 0 var(--side-w, 340px);
+  max-width: calc(100% - 280px); /* 地図が潰れないように */
   background: var(--surface);
   border-right: 1px solid var(--line);
   overflow-y: auto;
   padding: 16px;
+}
+/* サイドバーと地図の境目のつまみ。前後に 3px ずつはみ出して、レイアウト上の幅は 0 */
+.resizer {
+  order: -1;
+  position: relative;
+  z-index: 6;
+  flex: 0 0 6px;
+  margin: 0 -3px;
+  cursor: col-resize;
+  touch-action: none;
+}
+.resizer::after {
+  content: "";
+  position: absolute;
+  inset: 0 2px;
+  transition: background 0.15s;
+}
+.resizer:hover::after,
+.resizer:focus-visible::after,
+.resizer.dragging::after {
+  background: var(--accent);
+}
+.resizer:focus-visible {
+  outline: none;
+}
+body.resizing {
+  cursor: col-resize;
+  user-select: none;
 }
 @media (max-width: 860px) {
   main {
     flex-direction: column;
   }
   aside {
-    order: 1;
+    order: 2;
     width: auto;
-    flex: 0 0 44%;
+    max-width: none;
+    flex: 0 0 var(--side-h, 44%);
+    max-height: calc(100% - 140px);
     border-right: 0;
     border-top: 1px solid var(--line);
+  }
+  .resizer {
+    order: 1;
+    margin: -3px 0;
+    cursor: row-resize;
+  }
+  .resizer::after {
+    inset: 2px 0;
+  }
+  body.resizing {
+    cursor: row-resize;
   }
   .legend {
     max-width: 180px;

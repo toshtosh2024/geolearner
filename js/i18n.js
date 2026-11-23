@@ -4,8 +4,11 @@
 const LANGS = ["ja", "en"];
 const LANG_STORAGE_KEY = "geolearner.lang";
 
-// 保存済みの選択 → ブラウザの言語 の順で決める
+// URL の ?lang= → 保存済みの選択 → ブラウザの言語 の順で決める
+// （?lang= は検索エンジンや共有リンク向けに、言語ごとの URL を持たせるため）
 function initialLang() {
+  const fromUrl = new URLSearchParams(location.search).get("lang");
+  if (LANGS.includes(fromUrl)) return fromUrl;
   try {
     const saved = localStorage.getItem(LANG_STORAGE_KEY);
     if (LANGS.includes(saved)) return saved;
@@ -21,6 +24,14 @@ function saveLang() {
     localStorage.setItem(LANG_STORAGE_KEY, lang);
   } catch (e) {
     // 保存できなくても表示の切替はできるので無視する
+  }
+  // アドレスバーの URL も ?lang= に合わせる（そのまま共有できるように）
+  try {
+    const url = new URL(location.href);
+    url.searchParams.set("lang", lang);
+    history.replaceState(history.state, "", url);
+  } catch (e) {
+    // file:// で開いているときなど、URL を書き換えられない環境では何もしない
   }
 }
 
@@ -39,6 +50,7 @@ function loc(labels) {
 function applyStaticText() {
   document.documentElement.lang = lang;
   document.title = t("app.docTitle");
+  document.querySelector('meta[name="description"]').content = t("app.description");
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     el.textContent = t(el.dataset.i18n);
   });

@@ -5,6 +5,8 @@ const UI_TEXT = {
     "app.docTitle": "GeoGuessr 言語マップ｜世界の文字と言語で国を当てる",
     "app.title": "言語マップ",
     "app.subtitle": "GeoGuessr 用・世界の文字と言語",
+    "app.description":
+      "GeoGuessr で国を当てるための学習マップ。看板の文字・言語・冠詞・宗教・ストリートビューのカバレッジを国ごとに地図と一覧で確認でき、手がかりから国を当てるクイズもあります。",
 
     "view.map": "地図",
     "view.table": "一覧",
@@ -46,6 +48,7 @@ const UI_TEXT = {
     "side.stop": "一時停止標識",
     "side.tips": "見分けかた",
     "side.vs": "まぎらわしい国",
+    "side.resizeTitle": "ドラッグでサイズ調整（ダブルクリックで元に戻す）",
 
     "gram.the": "定冠詞",
     "gram.a": "不定冠詞",
@@ -94,6 +97,8 @@ const UI_TEXT = {
     "app.docTitle": "GeoGuessr Language Map | Tell countries apart by script and language",
     "app.title": "Language Map",
     "app.subtitle": "Scripts & languages for GeoGuessr",
+    "app.description":
+      "A study map for GeoGuessr: check each country's script, language, articles, religion and Street View coverage on a map or in a table, and practice with a clue-based quiz.",
 
     "view.map": "Map",
     "view.table": "Table",
@@ -135,6 +140,7 @@ const UI_TEXT = {
     "side.stop": "STOP SIGN",
     "side.tips": "HOW TO TELL IT APART",
     "side.vs": "EASILY CONFUSED WITH",
+    "side.resizeTitle": "Drag to resize (double-click to reset)",
 
     "gram.the": "the",
     "gram.a": "a / an",

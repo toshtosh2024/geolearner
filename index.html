@@ -4,6 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>GeoGuessr 言語マップ｜世界の文字と言語で国を当てる</title>
+  <!-- Google Search Console の所有権確認用 -->
+  <meta name="google-site-verification" content="59nymg4WYCvmxV9Vhm4dxex-ep4iYuux8kzzxZL3vD4">
+  <meta name="description" content="GeoGuessr で国を当てるための学習マップ。看板の文字・言語・冠詞・宗教・ストリートビューのカバレッジを国ごとに地図と一覧で確認でき、手がかりから国を当てるクイズもあります。">
+
+  <!-- 検索エンジン向け: 言語ごとの URL（?lang=ja / ?lang=en）。パラメータなしはブラウザの言語で表示 -->
+  <link rel="alternate" hreflang="ja" href="https://toshtosh2024.github.io/geolearner/?lang=ja">
+  <link rel="alternate" hreflang="en" href="https://toshtosh2024.github.io/geolearner/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://toshtosh2024.github.io/geolearner/">
+
+  <!-- SNS で共有したときの表示 -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://toshtosh2024.github.io/geolearner/">
+  <meta property="og:title" content="GeoGuessr 言語マップ｜世界の文字と言語で国を当てる">
+  <meta property="og:description" content="看板の文字・言語・冠詞・宗教・ストリートビューのカバレッジを国ごとに確認できる GeoGuessr 学習マップ（日本語 / English）。">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -50,6 +66,7 @@
       </div>
       <div class="tablewrap hidden" id="tablewrap"></div>
       <aside id="side"></aside>
+      <div class="resizer" id="sideResizer" role="separator" tabindex="0" title="ドラッグでサイズ調整（ダブルクリックで元に戻す）" data-i18n-title="side.resizeTitle"></div>
     </main>
   </div>
 
@@ -75,6 +92,7 @@
   <script src="js/map.js"></script>         <!-- 状態・描画・当たり判定 -->
   <script src="js/interaction.js"></script> <!-- ドラッグ・ズーム -->
   <script src="js/sidebar.js"></script>     <!-- サイドバー -->
+  <script src="js/resizer.js"></script>     <!-- サイドバーの幅調整 -->
   <script src="js/legend.js"></script>      <!-- 凡例 -->
   <script src="js/table.js"></script>       <!-- 一覧タブ -->
   <script src="js/quiz.js"></script>        <!-- クイズ -->
