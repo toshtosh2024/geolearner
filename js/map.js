@@ -6,7 +6,10 @@ let mode = "scr",
   hovered = null,
   dimCat = null,
   showLabels = true,
-  view = "map";
+  view = "map",
+  // 地図の種類: "simple"（この canvas で描く地図）/ "detail"（MapLibre の詳細地図。js/detail-map.js）
+  // "detail" のときは draw / fitWorld / flyTo / zoomBy を詳細地図側の処理に回す
+  baseMap = "simple";
 const cv = document.getElementById("map"),
   ctx = cv.getContext("2d");
 const pick = document.createElement("canvas"),
@@ -55,6 +58,11 @@ function colorOf(f) {
   const def = MODES[mode].cats.find((x) => x[0] === c);
   return def ? css(def[2]) : css("--nodata");
 }
+// 地図の塗り色（凡例で強調中のカテゴリ以外はグレーにする）。シンプル・詳細の両方で使う
+function fillColorOf(f) {
+  if (dimCat && catOf(f) !== dimCat) return css("--nodata");
+  return colorOf(f);
+}
 
 function resize() {
   const r = cv.getBoundingClientRect();
@@ -66,9 +74,11 @@ function resize() {
   pick.width = Math.max(1, Math.round(W / 2));
   pick.height = Math.max(1, Math.round(H / 2));
   pickDirty = true;
+  if (baseMap === "detail") detailResize(); // 詳細地図のキャンバスも合わせる
   draw();
 }
 function fitWorld() {
+  if (baseMap === "detail") return detailFitWorld();
   const { left, bottom } = mapInset();
   const vw = W - left,
     vh = H - bottom; // ドロワーに隠れていない範囲
@@ -104,10 +114,7 @@ function paint(c, scale, withStroke) {
   const lw = 0.6 / T.k;
   for (const f of FEATURES) {
     if (withStroke) {
-      const c0 = catOf(f);
-      let col = colorOf(f);
-      if (dimCat && c0 !== dimCat) col = css("--nodata");
-      c.fillStyle = col;
+      c.fillStyle = fillColorOf(f);
     } else {
       c.fillStyle =
         "rgb(" + ((f.idx >> 16) & 255) + "," + ((f.idx >> 8) & 255) + "," + (f.idx & 255) + ")";
@@ -171,6 +178,7 @@ function drawLabels() {
   ctx.restore();
 }
 function draw() {
+  if (baseMap === "detail") return syncDetailMap();
   paint(ctx, DPR, true);
   drawLabels();
   pickDirty = true;

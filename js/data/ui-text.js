@@ -25,6 +25,11 @@ const UI_TEXT = {
     "btn.themeTitle": "ライト / ダーク",
     "btn.langTitle": "表示言語",
     "zoom.resetTitle": "全体表示",
+    "base.title": "地図の種類（詳細: 拡大すると道路や地名まで見える地図）",
+    "base.simple": "シンプル",
+    "base.detail": "詳細",
+    "base.loadError":
+      "詳細地図を読み込めませんでした。通信環境を確認して、もう一度お試しください。",
 
     "map.noData": "データ未収録",
     "legend.noData": "データなし",
@@ -115,6 +120,10 @@ const UI_TEXT = {
     "btn.themeTitle": "Light / Dark",
     "btn.langTitle": "Language",
     "zoom.resetTitle": "Fit world",
+    "base.title": "Map style (Detailed: zoom in to see roads and place names)",
+    "base.simple": "Simple",
+    "base.detail": "Detailed",
+    "base.loadError": "Couldn't load the detailed map. Check your connection and try again.",
 
     "map.noData": "No data yet",
     "legend.noData": "No data",

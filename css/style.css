@@ -251,6 +251,36 @@ canvas {
   line-height: 1;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
+/* 詳細地図（MapLibre）。canvas の地図の上に重ねる
+   MapLibre の CSS が後から読み込まれて position を上書きするので、.stage を付けて優先させる */
+.stage .detail-map {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--ocean);
+}
+.detail-map.preparing {
+  visibility: hidden; /* 読み込み中は大きさだけ持たせて隠す */
+}
+/* 出典表記などの MapLibre のコントロールは、スマホ幅ではシートの上に出す */
+.detail-map .maplibregl-ctrl-bottom-right {
+  bottom: var(--drawer-h);
+}
+/* 地図の種類の切り替え（右下） */
+.basemap-seg {
+  position: absolute;
+  right: 12px;
+  bottom: calc(var(--drawer-h) + 12px);
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.stage.detail-on .basemap-seg {
+  bottom: calc(var(--drawer-h) + 40px); /* 詳細地図の出典表記の上に */
+}
+.basemap-seg.loading {
+  opacity: 0.6;
+  cursor: progress;
+}
 .legend {
   position: absolute;
   left: calc(var(--drawer-w) + 12px);

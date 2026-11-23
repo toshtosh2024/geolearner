@@ -182,3 +182,4 @@ fitWorld();
 renderLegend();
 placeholder();
 draw();
+restoreBaseMap(); // 前回「詳細」の地図を選んでいたら切り替える

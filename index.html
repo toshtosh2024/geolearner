@@ -69,6 +69,8 @@
     <main>
       <div class="stage" id="stage">
         <canvas id="map"></canvas>
+        <!-- 詳細地図（MapLibre）。「詳細」を選んだときに js/detail-map.js が作る -->
+        <div class="detail-map hidden" id="detailMap"></div>
         <div class="zoombar">
           <button id="zin">＋</button>
           <button id="zout">−</button>
@@ -77,6 +79,10 @@
         <div class="legend" id="legend"></div>
         <div class="tip" id="tip"></div>
         <div class="quizbar hidden" id="quizbar"></div>
+        <div class="seg basemap-seg" id="baseSeg" title="地図の種類" data-i18n-title="base.title">
+          <button data-base="simple" aria-pressed="true" data-i18n="base.simple">シンプル</button>
+          <button data-base="detail" aria-pressed="false" data-i18n="base.detail">詳細</button>
+        </div>
       </div>
       <div class="tablewrap hidden" id="tablewrap"></div>
       <aside id="side"></aside>
@@ -110,6 +116,7 @@
   <script src="js/legend.js"></script>      <!-- 凡例 -->
   <script src="js/table.js"></script>       <!-- 一覧タブ -->
   <script src="js/quiz.js"></script>        <!-- クイズ -->
+  <script src="js/detail-map.js"></script>  <!-- 詳細地図（MapLibre ＋ OpenFreeMap） -->
   <script src="js/main.js"></script>        <!-- ビュー切替・検索・テーマ・表示言語・起動 -->
 </body>
 </html>

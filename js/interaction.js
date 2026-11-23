@@ -4,6 +4,39 @@
 let drag = null,
   moved = 0,
   userMoved = false;
+
+// ツールチップ（国名・言語・カテゴリ）。x, y は地図の左上からの位置。シンプル・詳細の両方で使う
+function showTip(f, x, y) {
+  const tip = document.getElementById("tip");
+  const cat = catOf(f),
+    def = cat ? MODES[mode].cats.find((c) => c[0] === cat) : null;
+  tip.innerHTML = f.data
+    ? "<b>" +
+      f.data.name +
+      "</b><br><small>" +
+      f.data.langs +
+      '</small><br><small style="color:' +
+      colorOf(f) +
+      '">■</small> <small>' +
+      (def ? loc(def[1]) : "") +
+      "</small>"
+    : "<b>" + f.name + "</b><br><small>" + t("map.noData") + "</small>";
+  tip.style.display = "block";
+  const w = tip.offsetWidth,
+    h = tip.offsetHeight;
+  tip.style.left = Math.min(W - w - 8, x + 14) + "px";
+  tip.style.top = Math.max(4, y - h - 12) + "px";
+}
+function hideTip() {
+  document.getElementById("tip").style.display = "none";
+}
+
+// 地図上の国をクリックしたとき（クイズ中は回答、それ以外は選択。視点は動かさない）
+function onCountryClick(f) {
+  if (view === "quiz" && quiz && !quiz.done) {
+    if (f) finishQuiz(f);
+  } else if (f) selectCountry(f.name, true);
+}
 cv.addEventListener("pointerdown", (e) => {
   drag = { x: e.clientX, y: e.clientY };
   moved = 0;
@@ -23,49 +56,25 @@ cv.addEventListener("pointermove", (e) => {
     userMoved = true;
     clampT();
     draw();
-    document.getElementById("tip").style.display = "none";
+    hideTip();
     return;
   }
   const f = hit(mx, my);
-  const tip = document.getElementById("tip");
   if (f !== hovered) {
     hovered = f;
     draw();
   }
-  if (f) {
-    const cat = catOf(f),
-      def = cat ? MODES[mode].cats.find((x) => x[0] === cat) : null;
-    tip.innerHTML = f.data
-      ? "<b>" +
-        f.data.name +
-        "</b><br><small>" +
-        f.data.langs +
-        '</small><br><small style="color:' +
-        colorOf(f) +
-        '">■</small> <small>' +
-        (def ? loc(def[1]) : "") +
-        "</small>"
-      : "<b>" + f.name + "</b><br><small>" + t("map.noData") + "</small>";
-    tip.style.display = "block";
-    const w = tip.offsetWidth,
-      h = tip.offsetHeight;
-    tip.style.left = Math.min(W - w - 8, mx + 14) + "px";
-    tip.style.top = Math.max(4, my - h - 12) + "px";
-  } else tip.style.display = "none";
+  if (f) showTip(f, mx, my);
+  else hideTip();
 });
 cv.addEventListener("pointerup", (e) => {
   const r = cv.getBoundingClientRect();
-  if (drag && moved < 5) {
-    const f = hit(e.clientX - r.left, e.clientY - r.top);
-    if (view === "quiz" && quiz && !quiz.done) {
-      if (f) finishQuiz(f);
-    } else if (f) selectCountry(f.name, true); // 地図クリックでは視点を動かさない
-  }
+  if (drag && moved < 5) onCountryClick(hit(e.clientX - r.left, e.clientY - r.top));
   drag = null;
 });
 cv.addEventListener("pointerleave", () => {
   hovered = null;
-  document.getElementById("tip").style.display = "none";
+  hideTip();
   draw();
 });
 cv.addEventListener(
@@ -90,6 +99,7 @@ cv.addEventListener(
 );
 function zoomBy(s) {
   userMoved = true;
+  if (baseMap === "detail") return detailZoomBy(s);
   // ドロワーに隠れていない範囲の中央を軸にズームする
   const { left, bottom } = mapInset();
   const cx = left + (W - left) / 2,
@@ -113,6 +123,7 @@ document.getElementById("zreset").onclick = () => {
 
 function flyTo(f, pad) {
   userMoved = true;
+  if (baseMap === "detail") return detailFlyTo(f);
   // ドロワーに隠れていない範囲の中央に寄せる
   const { left, bottom } = mapInset();
   const vw = W - left,
