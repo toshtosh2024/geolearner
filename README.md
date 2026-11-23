@@ -1,2 +1,2 @@
 # geolearner
-this repo is for learners of geogessur
+this repo is for learners of geoguessr
