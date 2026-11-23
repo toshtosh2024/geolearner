@@ -1,0 +1,100 @@
+// 言語ごとの機能語（grammar.js の GRAM）の英語版。キーと項目は GRAM と同じ
+// 国 → 言語コードの対応（CGRAM）は言語に依存しないので grammar.js のものを使う
+const GRAM_EN={
+/* --- ゲルマン --- */
+en:{n:"English",the:"the",a:"a / an",of:"of",and:"and (&)",or:"or",tip:"\"the\" appears alone only in English."},
+de:{n:"German",the:"der / die / das (den, dem, des)",a:"ein / eine",of:"von, des",and:"und",or:"oder",tip:"\"und\" and \"oder\". Nouns always start with a capital letter."},
+nl:{n:"Dutch",the:"de / het",a:"een",of:"van",and:"en",or:"of",tip:"\"van\" is common in place and company names (van der, van den). \"and\" is \"en\"."},
+af:{n:"Afrikaans",the:"die",a:"'n",of:"van",and:"en",or:"of",tip:"The indefinite article 'n (apostrophe + n) occurs only in Afrikaans worldwide."},
+sv:{n:"Swedish",the:"suffix (-en / -et / -na)",a:"en / ett",of:"av",and:"och",or:"eller",tip:"och = and is found only in Swedish among the Nordic languages (Norwegian and Danish use og)."},
+no:{n:"Norwegian",the:"suffix (-en / -et / -ene)",a:"en / ei / et",of:"av",and:"og",or:"eller",tip:"og = and. Same as Danish, so tell apart by av / af."},
+da:{n:"Danish",the:"suffix (-en / -et)",a:"en / et",of:"af",and:"og",or:"eller",tip:"af (f) means Danish, av (v) means Norwegian."},
+is:{n:"Icelandic",the:"suffix (-inn / -in / -ið)",a:"(no indefinite article)",of:"af, úr",and:"og",or:"eða",tip:"The ð in \"eða\", and no indefinite article."},
+fo:{n:"Faroese",the:"suffix (-in / -ið)",a:"ein / eitt",of:"av",and:"og",or:"ella",tip:"og + ella. Counterpart of Icelandic \"eða\"."},
+kl:{n:"Greenlandic",the:"(no articles)",a:"",of:"-p (genitive suffix)",and:"aamma",or:"imaluunniit",tip:"Words are very long, chaining morphemes together."},
+/* --- ロマンス --- */
+fr:{n:"French",the:"le / la / les (l')",a:"un / une / des",of:"de / du / de la / des",and:"et",or:"ou",tip:"et = and. Many apostrophe elisions like d' and l'."},
+es:{n:"Spanish",the:"el / la / los / las",a:"un / una",of:"de / del",and:"y (e before a vowel)",or:"o (u)",tip:"Single-letter y = and marks Spanish. \"del\" is also frequent."},
+ca:{n:"Catalan",the:"el / la / els / les (l')",a:"un / una",of:"de / del",and:"i",or:"o",tip:"Conjunction is i (counterpart of Spanish y). The middle dot l·l is also a decisive clue."},
+gl:{n:"Galician",the:"o / a / os / as",a:"un / unha",of:"de / do / da",and:"e",or:"ou",tip:"Almost identical to Portuguese, but tell apart by \"unha\" (indefinite article)."},
+eu:{n:"Basque",the:"suffix -a / -ak",a:"bat (after the noun)",of:"-ren / -ko",and:"eta",or:"edo",tip:"eta = and. Many tx / tz / k, with a string of -a endings."},
+pt:{n:"Portuguese",the:"o / a / os / as",a:"um / uma",of:"de / do / da / dos / das",and:"e",or:"ou",tip:"Definite article is o / a. \"do\" and \"da\" appear heavily in place names."},
+it:{n:"Italian",the:"il / lo / la / i / gli / le",a:"un / una",of:"di / del / della",and:"e",or:"o",tip:"\"gli\" and \"della\" are found only in Italian."},
+ro:{n:"Romanian",the:"suffix (-ul / -a / -le)",a:"un / o",of:"de / al / a",and:"și",or:"sau",tip:"\"și\" (ș) = and. A Romance language where the definite article is a suffix."},
+ht:{n:"Haitian Creole",the:"placed after the word: la / a / an",a:"yon",of:"de / pou",and:"ak / e",or:"oswa",tip:"French words, but spelled as spoken (Lekòl, Bonjou)."},
+pap:{n:"Papiamento",the:"e",a:"un",of:"di",and:"i",or:"of",tip:"Bon Bini (welcome). A mix of Spanish and Dutch."},
+/* --- ケルト --- */
+ga:{n:"Irish",the:"an / na",a:"(no indefinite article)",of:"de / ó",and:"agus (⁊)",or:"nó",tip:"agus = and. Often paired with English on signs, so it reads as two tiers."},
+cy:{n:"Welsh",the:"y / yr / 'r",a:"(no indefinite article)",of:"o",and:"a / ac",or:"neu",tip:"ll, dd, ff, w are used like vowels."},
+/* --- スラヴ --- */
+pl:{n:"Polish",the:"(no articles)",a:"",of:"od / z / do",and:"i",or:"lub / albo",tip:"No articles + i = and. Single-letter w (meaning \"in/at\") is also frequent."},
+cs:{n:"Czech",the:"(no articles)",a:"",of:"z / od / do",and:"a",or:"nebo",tip:"Single-letter a = and. nebo = or."},
+sk:{n:"Slovak",the:"(no articles)",a:"",of:"z / od",and:"a",or:"alebo",tip:"Same \"a\" as Czech, but or is \"alebo\"."},
+sl:{n:"Slovenian",the:"(no articles)",a:"",of:"od / iz",and:"in",or:"ali",tip:"in = and (easily confused with English \"in\"). ali = or."},
+hr:{n:"Croatian / Bosnian / Montenegrin",the:"(no articles)",a:"",of:"od / iz",and:"i",or:"ili",tip:"i and ili. Judge together with Č Ć Š Ž Đ."},
+sr:{n:"Serbian",the:"(no articles)",a:"",of:"од / из",and:"и (i)",or:"или (ili)",tip:"The same words are written in both Cyrillic and Latin."},
+bg:{n:"Bulgarian",the:"suffix (-ът / -та / -то / -те)",a:"един / една",of:"на",and:"и",or:"или",tip:"Among Slavic languages, only Bulgarian and Macedonian suffix the definite article."},
+mk:{n:"Macedonian",the:"suffix (-от / -та / -то)",a:"еден / една",of:"на",and:"и",or:"или",tip:"Same pattern as Bulgarian. Tell apart by ѓ ќ ѕ."},
+ru:{n:"Russian",the:"(no articles)",a:"",of:"на / из / от / с",and:"и",or:"или",tip:"и = and. на / улица often appear in addresses."},
+uk:{n:"Ukrainian",the:"(no articles)",a:"",of:"на / з / від",and:"і / та",or:"або",tip:"і (dotted) = and is the decisive clue. Russian uses и."},
+be:{n:"Belarusian",the:"(no articles)",a:"",of:"на / з",and:"і",or:"або",tip:"Judge together with ў (short u)."},
+/* --- バルト・ウラル --- */
+lt:{n:"Lithuanian",the:"(no articles)",a:"",of:"iš / nuo",and:"ir",or:"arba",tip:"ir = and. Endings -as / -is / -ė."},
+lv:{n:"Latvian",the:"(no articles)",a:"",of:"no",and:"un",or:"vai",tip:"un = and (similar to German \"und\", but with one n)."},
+et:{n:"Estonian",the:"(no articles)",a:"",of:"-st / -lt (case suffixes)",and:"ja",or:"või",tip:"ja = and (same as Finnish). Finnish is the one without the õ seen in või."},
+fi:{n:"Finnish",the:"(no articles)",a:"",of:"-n (genitive suffix)",and:"ja",or:"tai",tip:"ja = and. Almost no prepositions; expressed by case endings."},
+hu:{n:"Hungarian",the:"a / az",a:"egy",of:"-nak / -nek",and:"és",or:"vagy",tip:"és = and, and the 1-2 letter a / az."},
+/* --- その他ヨーロッパ --- */
+el:{n:"Greek",the:"ο / η / το / οι / τα",a:"ένας / μία / ένα",of:"του / της / των",and:"και (abbreviated κ.)",or:"ή",tip:"και = and. Written κ. instead of &."},
+sq:{n:"Albanian",the:"suffix (-i / -u / -a)",a:"një",of:"i / e / të",and:"dhe",or:"ose",tip:"dhe = and, një = a. Lots of ë."},
+ka:{n:"Georgian",the:"(no articles)",a:"ერთი",of:"-ის (genitive)",and:"და (da)",or:"ან",tip:"და = and, repeated throughout sentences."},
+hy:{n:"Armenian",the:"suffix -ը / -ն",a:"մի",of:"-ի",and:"և (one-letter ligature)",or:"կամ",tip:"և = and stands out as a distinctive ligature."},
+/* --- テュルク・中央アジア --- */
+tr:{n:"Turkish",the:"(no articles)",a:"bir",of:"-in / -ın (genitive)",and:"ve",or:"veya",tip:"ve = and. Possessive suffix -i / -si attaches, as in \"X Caddesi\"."},
+az:{n:"Azerbaijani",the:"(no articles)",a:"bir",of:"-ın / -in",and:"və",or:"və ya",tip:"The ə in \"və\" is the decisive clue (not in Turkish)."},
+uz:{n:"Uzbek",the:"(no articles)",a:"bir",of:"-ning",and:"va",or:"yoki",tip:"va + oʻ / gʻ (letters with apostrophe)."},
+kk:{n:"Kazakh",the:"(no articles)",a:"бір",of:"-ның / -нің",and:"және",or:"немесе",tip:"және = and. Judge together with ә қ ң ө ұ."},
+ky:{n:"Kyrgyz",the:"(no articles)",a:"бир",of:"-нын",and:"жана",or:"же",tip:"жана = and. Counterpart of Kazakh \"және\"."},
+tk:{n:"Turkmen",the:"(no articles)",a:"bir",of:"-yň",and:"we",or:"ýa-da",tip:"Accented letters ý / ň."},
+tg:{n:"Tajik",the:"(no articles)",a:"як",of:"-и (ezafe)",and:"ва",or:"ё",tip:"Cyrillic, but with Persian vocabulary (ва = and)."},
+mn:{n:"Mongolian",the:"(no articles)",a:"нэг",of:"-ын / -ийн",and:"ба / болон",or:"эсвэл",tip:"ө ү appear often. ба = and."},
+/* --- セム・中東 --- */
+ar:{n:"Arabic",the:"الـ (al-) attached to the start of the word",a:"(no indefinite article)",of:"من / لـ / في",and:"و (wa, attached directly to the next word)",or:"أو",tip:"The ال (al) at the start of a word is the definite article. و is always written joined to the next word."},
+he:{n:"Hebrew",the:"ה (ha-) attached to the start of the word",a:"(no indefinite article)",of:"של / מ",and:"ו (ve-, attached directly to the next word)",or:"או",tip:"Single-letter prefixes attach to words, so there seem to be few spaces."},
+mt:{n:"Maltese",the:"il- / l- / is- / ir- (assimilates to the following consonant)",a:"(no indefinite article)",of:"ta' / tal-",and:"u",or:"jew",tip:"The hyphenated il- and the apostrophe in ta' are the decisive clues."},
+am:{n:"Amharic",the:"suffix -ው / -ዋ",a:"አንድ",of:"የ (at start of word)",and:"እና",or:"ወይም",tip:"Strings of Ge'ez syllabic characters."},
+fa:{n:"Persian",the:"(no articles)",a:"یک",of:"ـِ (ezafe)",and:"و",or:"یا",tip:"Arabic script, but mixed with پ چ ژ گ."},
+ur:{n:"Urdu",the:"(no articles)",a:"ایک",of:"کا / کی / کے",and:"اور",or:"یا",tip:"Nastaliq script flows from upper right to lower left."},
+/* --- 南アジア --- */
+hi:{n:"Hindi",the:"(no articles)",a:"एक",of:"का / की / के",and:"और",or:"या",tip:"और = and. Letters are connected by the horizontal bar on top."},
+bn:{n:"Bengali",the:"suffix -টি / -টা",a:"একটি",of:"-র / -এর",and:"এবং / ও",or:"বা",tip:"এবং = and. Rounded letterforms."},
+ne:{n:"Nepali",the:"(no articles)",a:"एक",of:"को / का / की",and:"र",or:"वा",tip:"Single letter र = and is the Nepali marker."},
+si:{n:"Sinhala",the:"(no articles)",a:"එක්",of:"-ගේ / -හි",and:"සහ",or:"හෝ",tip:"සහ = and. Looping, round letterforms."},
+ta:{n:"Tamil",the:"(no articles)",a:"ஒரு",of:"-இன் / -உடைய",and:"மற்றும்",or:"அல்லது",tip:"Combination of round shapes and dots. Southern India, Sri Lanka, Singapore."},
+dv:{n:"Dhivehi",the:"(no articles)",a:"އެއް",of:"ގެ",and:"އަދި",or:"ނުވަތަ",tip:"Thaana script is written right to left."},
+dz:{n:"Dzongkha",the:"(no articles)",a:"",of:"གི / ཀྱི",and:"དང་",or:"ཡང་ན",tip:"Tibetan script. A separator mark \"་\" appears after each syllable."},
+/* --- 東アジア --- */
+ja:{n:"Japanese",the:"(no articles)",a:"",of:"の",and:"と / 及び",or:"または",tip:"\"の\" appears with unusual frequency. Particles は, が, を are also clues."},
+ko:{n:"Korean",the:"(no articles)",a:"",of:"의",and:"와 / 과 / 및",or:"또는",tip:"Particles 은 / 는 / 이 / 가 attach to the ends of words."},
+zh:{n:"Chinese",the:"(no articles)",a:"一個 / 一个",of:"的",and:"和 / 及",or:"或",tip:"\"的\" and \"和\". Tell the region by simplified (国 / 门) or traditional (國 / 門) characters."},
+/* --- 東南アジア --- */
+th:{n:"Thai",the:"(no articles)",a:"หนึ่ง",of:"ของ",and:"และ",or:"หรือ",tip:"และ = and. Written without spaces between words."},
+lo:{n:"Lao",the:"(no articles)",a:"ໜຶ່ງ",of:"ຂອງ",and:"ແລະ",or:"ຫຼື",tip:"ແລະ = and. Rounder, with fewer letters than Thai."},
+km:{n:"Khmer",the:"(no articles)",a:"មួយ",of:"របស់",and:"និង",or:"ឬ",tip:"និង = and. Letterforms with downward-extending strokes."},
+my:{n:"Burmese",the:"(no articles)",a:"တစ်",of:"၏ / ရဲ့",and:"နှင့် / နဲ့",or:"သို့မဟုတ်",tip:"Round script full of circles."},
+vi:{n:"Vietnamese",the:"(no articles / classifiers cái, con)",a:"một",of:"của",and:"và",or:"hoặc",tip:"và = and. Each syllable is space-separated, and marks appear on two levels."},
+ms:{n:"Malay / Indonesian",the:"(no articles)",a:"sebuah / satu",of:"dari / -nya",and:"dan",or:"atau",tip:"dan = and, and yang is frequent. Judge together with Jalan (road)."},
+tl:{n:"Filipino (Tagalog)",the:"ang / ang mga",a:"isang",of:"ng / sa",and:"at",or:"o",tip:"at = and, and ng. Often appears between English words on signs."},
+/* --- アフリカ --- */
+sw:{n:"Swahili",the:"(no articles / class prefixes m- wa- ki- vi-)",a:"",of:"ya / wa / cha",and:"na",or:"au",tip:"na = and, ya = of. Karibu (welcome), Hatari (danger)."},
+rw:{n:"Kinyarwanda",the:"(no articles)",a:"",of:"cya / bya",and:"na",or:"cyangwa",tip:"Prefixes Umu- / Aba- / Ubu- line up at the start of words."},
+mg:{n:"Malagasy",the:"ny",a:"(no indefinite article)",of:"-n' / an'",and:"sy",or:"na",tip:"ny appears a lot. Words are very long."},
+/* --- 太平洋 --- */
+mi:{n:"Māori",the:"te / ngā",a:"he",of:"o / a",and:"me",or:"rānei",tip:"te / ngā, plus Wh and long vowels (ā ē ī ō ū)."},
+sm:{n:"Samoan",the:"le / ā",a:"se",of:"o / a",and:"ma",or:"pe",tip:"Many apostrophes (') and macrons."},
+tpi:{n:"Tok Pisin",the:"(no articles)",a:"wanpela",of:"bilong",and:"na",or:"o",tip:"bilong = of, na = and. Looks like broken English."},
+bi:{n:"Bislama",the:"(no articles)",a:"wan",of:"blong",and:"mo",or:"o",tip:"blong = of. Close to Tok Pisin."},
+/* --- 南米先住民語 --- */
+qu:{n:"Quechua",the:"(no articles)",a:"huk",of:"-p / -pa",and:"-wan",or:"icha",tip:"Place names such as Huay- / -marca / -bamba."},
+gn:{n:"Guarani",the:"(no articles)",a:"peteĩ",of:"-gua",and:"ha",or:"térã",tip:"ha = and. Vowels with tildes ĩ ỹ and apostrophes."}
+};

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GeoGuessr 言語マップ｜世界の文字と言語で国を当てる</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- data-i18n* 属性の文言は、js/i18n.js の applyStaticText() で表示言語のものに差し替わる -->
+  <div class="app">
+    <header>
+      <div class="brand">🌍 <span data-i18n="app.title">言語マップ</span><span class="brand-sub" data-i18n="app.subtitle">GeoGuessr 用・世界の文字と言語</span></div>
+      <div class="seg" id="viewSeg">
+        <button data-view="map" aria-pressed="true" data-i18n="view.map">地図</button>
+        <button data-view="table" aria-pressed="false" data-i18n="view.table">一覧</button>
+        <button data-view="quiz" aria-pressed="false" data-i18n="view.quiz">クイズ</button>
+      </div>
+      <div class="seg" id="modeSeg">
+        <button data-mode="scr" aria-pressed="true" data-i18n="mode.scr">文字</button>
+        <button data-mode="fam" aria-pressed="false" data-i18n="mode.fam">語族</button>
+        <button data-mode="lingua" aria-pressed="false" data-i18n="mode.lingua">通用語</button>
+        <button data-mode="rel" aria-pressed="false" data-i18n="mode.rel">宗教</button>
+        <button data-mode="sv" aria-pressed="false" data-i18n="mode.sv">SV</button>
+      </div>
+      <div class="spacer"></div>
+      <div class="search">
+        <input id="q" type="text" placeholder="国名・言語で検索" data-i18n-placeholder="search.placeholder" autocomplete="off">
+        <div class="sugg" id="sugg"></div>
+      </div>
+      <button class="iconbtn" id="labelBtn" title="国名ラベルの表示切替" data-i18n="btn.labels" data-i18n-title="btn.labelsTitle">🏷 ラベル</button>
+      <button class="iconbtn" id="themeBtn" title="ライト / ダーク" data-i18n-title="btn.themeTitle">◐</button>
+      <div class="seg" id="langSeg" title="表示言語" data-i18n-title="btn.langTitle">
+        <button data-lang="ja" aria-pressed="true">JA</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="stage" id="stage">
+        <canvas id="map"></canvas>
+        <div class="zoombar">
+          <button id="zin">＋</button>
+          <button id="zout">−</button>
+          <button id="zreset" title="全体表示" data-i18n-title="zoom.resetTitle">⤢</button>
+        </div>
+        <div class="legend" id="legend"></div>
+        <div class="tip" id="tip"></div>
+        <div class="quizbar hidden" id="quizbar"></div>
+      </div>
+      <div class="tablewrap hidden" id="tablewrap"></div>
+      <aside id="side"></aside>
+    </main>
+  </div>
+
+  <!--
+    スクリプトはすべて通常の <script> で、トップレベルの const / let / function を共有している。
+    上のファイルで定義したものを下のファイルが使うので、読み込み順は変えないこと。
+  -->
+
+  <!-- データ（*.en.js は英語版。日本語版と同じキーで表示テキストだけを持つ） -->
+  <script src="js/data/world-topo.js"></script>
+  <script src="js/data/countries.js"></script>
+  <script src="js/data/countries.en.js"></script>
+  <script src="js/data/grammar.js"></script>
+  <script src="js/data/grammar.en.js"></script>
+  <script src="js/data/religion.js"></script>
+  <script src="js/data/religion.en.js"></script>
+  <script src="js/data/ui-text.js"></script>
+
+  <!-- アプリ本体 -->
+  <script src="js/i18n.js"></script>        <!-- 表示言語・文言・データの言語別ビュー -->
+  <script src="js/modes.js"></script>       <!-- カテゴリ定義 -->
+  <script src="js/geometry.js"></script>    <!-- TopoJSON → 地図パス -->
+  <script src="js/map.js"></script>         <!-- 状態・描画・当たり判定 -->
+  <script src="js/interaction.js"></script> <!-- ドラッグ・ズーム -->
+  <script src="js/sidebar.js"></script>     <!-- サイドバー -->
+  <script src="js/legend.js"></script>      <!-- 凡例 -->
+  <script src="js/table.js"></script>       <!-- 一覧タブ -->
+  <script src="js/quiz.js"></script>        <!-- クイズ -->
+  <script src="js/main.js"></script>        <!-- ビュー切替・検索・テーマ・表示言語・起動 -->
+</body>
+</html>
