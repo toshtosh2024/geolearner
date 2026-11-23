@@ -211,6 +211,14 @@ main {
   flex: 1;
   display: flex;
   min-height: 0;
+  position: relative;
+  /*
+    ドロワー（サイドバー）は地図の手前に重ねる。重なっている幅 / 高さをここで決めて、
+    凡例・クイズ・一覧の位置合わせに使う（PC は左に幅 --drawer-w、スマホ幅は下に高さ --drawer-h）
+    --side-w / --side-h は js/resizer.js がドラッグで設定する。地図側には最低 280px / 140px 残す
+  */
+  --drawer-w: min(var(--side-w, 340px), 100% - 280px);
+  --drawer-h: 0px;
 }
 .stage {
   position: relative;
@@ -245,8 +253,8 @@ canvas {
 }
 .legend {
   position: absolute;
-  left: 12px;
-  bottom: 12px;
+  left: calc(var(--drawer-w) + 12px);
+  bottom: calc(var(--drawer-h) + 12px);
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -256,11 +264,31 @@ canvas {
   z-index: 5;
 }
 .legend h4 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin: 0 0 6px;
   font-size: 11px;
   color: var(--ink-3);
   font-weight: 600;
   letter-spacing: 0.06em;
+  cursor: pointer; /* クリックで凡例を開閉 */
+  user-select: none;
+}
+.legend .chev {
+  margin-left: auto;
+  font-size: 10px;
+}
+.legend.collapsed h4 {
+  margin: 0;
+}
+.legend.collapsed .row {
+  display: none;
+}
+.legend .count {
+  margin-left: auto;
+  color: var(--ink-3);
+  font-size: 11px;
 }
 .legend .row {
   display: flex;
@@ -305,24 +333,28 @@ canvas {
 }
 
 /* ---------- sidebar ---------- */
-/* サイドバーの幅 --side-w（スマホ幅では高さ --side-h）は js/resizer.js がドラッグで設定する */
+/* ドロワー: 地図の手前に重ねる。PC は左端、スマホ幅は下から出るシート（サイズは main の変数） */
 aside {
-  order: -2;
-  width: var(--side-w, 340px);
-  flex: 0 0 var(--side-w, 340px);
-  max-width: calc(100% - 280px); /* 地図が潰れないように */
+  position: absolute;
+  z-index: 15; /* 凡例・クイズより手前、ツールチップ（20）より奥 */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--drawer-w);
   background: var(--surface);
   border-right: 1px solid var(--line);
+  box-shadow: 4px 0 18px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   padding: 16px;
 }
-/* サイドバーと地図の境目のつまみ。前後に 3px ずつはみ出して、レイアウト上の幅は 0 */
+/* ドロワーの縁のつまみ（ドラッグでサイズ調整）。縁をまたいで 6px の当たり判定 */
 .resizer {
-  order: -1;
-  position: relative;
-  z-index: 6;
-  flex: 0 0 6px;
-  margin: 0 -3px;
+  position: absolute;
+  z-index: 16;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--drawer-w) - 3px);
+  width: 6px;
   cursor: col-resize;
   touch-action: none;
 }
@@ -332,10 +364,15 @@ aside {
   inset: 0 2px;
   transition: background 0.15s;
 }
-.resizer:hover::after,
 .resizer:focus-visible::after,
 .resizer.dragging::after {
   background: var(--accent);
+}
+/* タッチ端末では触ったあとに :hover が残るので、マウスがあるときだけ */
+@media (hover: hover) {
+  .resizer:hover::after {
+    background: var(--accent);
+  }
 }
 .resizer:focus-visible {
   outline: none;
@@ -346,31 +383,62 @@ body.resizing {
 }
 @media (max-width: 860px) {
   main {
-    flex-direction: column;
+    --drawer-w: 0px;
+    --drawer-h: min(var(--side-h, 44%), 100% - 140px);
   }
   aside {
-    order: 2;
+    top: auto;
+    right: 0;
     width: auto;
-    max-width: none;
-    flex: 0 0 var(--side-h, 44%);
-    max-height: calc(100% - 140px);
+    height: var(--drawer-h);
+    padding-top: 24px; /* 上端のつまみの分 */
     border-right: 0;
     border-top: 1px solid var(--line);
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.12);
   }
+  /* シート上端のつまみ。指で掴みやすいよう高さを取り、中央に取っ手を描く */
   .resizer {
-    order: 1;
-    margin: -3px 0;
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: calc(var(--drawer-h) - 20px);
+    width: auto;
+    height: 22px;
     cursor: row-resize;
   }
   .resizer::after {
-    inset: 2px 0;
+    inset: 9px auto auto 50%;
+    width: 36px;
+    height: 4px;
+    margin-left: -18px;
+    border-radius: 2px;
+    background: var(--line);
   }
   body.resizing {
     cursor: row-resize;
   }
+  /* 凡例は小さく。件数は省く（既定では閉じた状態。js/legend.js） */
   .legend {
-    max-width: 180px;
+    max-width: 170px;
+    padding: 6px 9px;
+  }
+  .legend h4 {
+    font-size: 10px;
+    margin-bottom: 3px;
+  }
+  .legend .row {
     font-size: 11px;
+    line-height: 1.35;
+    gap: 5px;
+    padding: 1px 2px;
+  }
+  .legend .sw {
+    width: 10px;
+    height: 10px;
+  }
+  .legend .count {
+    display: none;
   }
 }
 .ph {
@@ -515,6 +583,7 @@ body.resizing {
   flex: 1;
   overflow: auto;
   background: var(--surface);
+  padding: 0 0 var(--drawer-h) var(--drawer-w); /* ドロワーに隠れる分をあける */
 }
 table {
   border-collapse: collapse;
@@ -559,9 +628,10 @@ td.k {
 .quizbar {
   position: absolute;
   top: 12px;
-  left: 50%;
+  /* ドロワーに隠れていない範囲の中央に置く */
+  left: calc(var(--drawer-w) + (100% - var(--drawer-w)) / 2);
   transform: translateX(-50%);
-  width: min(560px, calc(100% - 110px));
+  width: min(560px, calc(100% - var(--drawer-w) - 110px));
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -577,13 +647,6 @@ td.k {
   color: var(--ink-3);
   letter-spacing: 0.06em;
   margin-bottom: 6px;
-}
-.qhead .sc {
-  margin-left: auto;
-  color: var(--ink-2);
-  font-weight: 600;
-  letter-spacing: 0;
-  font-size: 12px;
 }
 .qbody {
   font-size: 14px;

@@ -90,12 +90,16 @@ cv.addEventListener(
 );
 function zoomBy(s) {
   userMoved = true;
-  const ux = (W / 2 - T.x) / T.k,
-    uy = (H / 2 - T.y) / T.k;
+  // ドロワーに隠れていない範囲の中央を軸にズームする
+  const { left, bottom } = mapInset();
+  const cx = left + (W - left) / 2,
+    cy = (H - bottom) / 2;
+  const ux = (cx - T.x) / T.k,
+    uy = (cy - T.y) / T.k;
   T.k *= s;
   clampT();
-  T.x = W / 2 - ux * T.k;
-  T.y = H / 2 - uy * T.k;
+  T.x = cx - ux * T.k;
+  T.y = cy - uy * T.k;
   clampT();
   draw();
 }
@@ -109,16 +113,20 @@ document.getElementById("zreset").onclick = () => {
 
 function flyTo(f, pad) {
   userMoved = true;
+  // ドロワーに隠れていない範囲の中央に寄せる
+  const { left, bottom } = mapInset();
+  const vw = W - left,
+    vh = H - bottom;
   const [x0, y0, x1, y1] = f.bbox;
   const w = Math.max(x1 - x0, 0.004),
     h = Math.max(y1 - y0, 0.004);
-  const k = Math.min(W / (w * (pad || 2.6)), H / (h * (pad || 2.6)));
+  const k = Math.min(vw / (w * (pad || 2.6)), vh / (h * (pad || 2.6)));
   const k0 = T.k,
     x0s = T.x,
     y0s = T.y;
-  const kt = Math.max(Math.min(W, H) * 0.35, k),
-    xt = W / 2 - ((x0 + x1) / 2) * kt,
-    yt = H / 2 - ((y0 + y1) / 2) * kt;
+  const kt = Math.max(Math.min(vw, vh) * 0.35, k),
+    xt = left + vw / 2 - ((x0 + x1) / 2) * kt,
+    yt = vh / 2 - ((y0 + y1) / 2) * kt;
   const t0 = performance.now();
   (function step(t) {
     const p = Math.min(1, (t - t0) / 450),

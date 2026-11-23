@@ -1,6 +1,8 @@
 /* ============================================================
    凡例
+   見出しをクリックすると開閉できる。スマホ幅では地図が狭いので最初は閉じておく
    ============================================================ */
+let legendOpen = !NARROW_LAYOUT.matches;
 function renderLegend() {
   const m = MODES[mode];
   const counts = {};
@@ -8,10 +10,14 @@ function renderLegend() {
     const c = catOf(f);
     if (c) counts[c] = (counts[c] || 0) + 1;
   });
-  document.getElementById("legend").innerHTML =
+  const legend = document.getElementById("legend");
+  legend.classList.toggle("collapsed", !legendOpen);
+  legend.innerHTML =
     "<h4>" +
     loc(m.label).toUpperCase() +
-    "</h4>" +
+    '<span class="chev">' +
+    (legendOpen ? "▾" : "▸") +
+    "</span></h4>" +
     m.cats
       .map(
         (c) =>
@@ -24,7 +30,7 @@ function renderLegend() {
           css(c[2]) +
           '"></span>' +
           loc(c[1]) +
-          '<span style="margin-left:auto;color:var(--ink-3);font-size:11px">' +
+          '<span class="count">' +
           (counts[c[0]] || 0) +
           "</span></div>",
       )
@@ -36,14 +42,15 @@ function renderLegend() {
     '"></span>' +
     t("legend.noData") +
     "</div>";
-  document
-    .getElementById("legend")
-    .querySelectorAll(".row")
-    .forEach((r) => {
-      r.onclick = () => {
-        dimCat = dimCat === r.dataset.cat || !r.dataset.cat ? null : r.dataset.cat;
-        renderLegend();
-        draw();
-      };
-    });
+  legend.querySelector("h4").onclick = () => {
+    legendOpen = !legendOpen;
+    renderLegend();
+  };
+  legend.querySelectorAll(".row").forEach((r) => {
+    r.onclick = () => {
+      dimCat = dimCat === r.dataset.cat || !r.dataset.cat ? null : r.dataset.cat;
+      renderLegend();
+      draw();
+    };
+  });
 }

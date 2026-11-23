@@ -167,7 +167,10 @@ function relayout() {
   draw();
 }
 window.addEventListener("resize", relayout);
-new ResizeObserver(relayout).observe(document.getElementById("stage"));
+// 地図の大きさが変わったとき・ドロワーのサイズが変わったとき（地図の見える範囲が変わる）に描き直す
+const layoutObserver = new ResizeObserver(relayout);
+layoutObserver.observe(document.getElementById("stage"));
+layoutObserver.observe(side);
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
   renderLegend();
   draw();

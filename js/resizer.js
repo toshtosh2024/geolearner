@@ -1,18 +1,19 @@
 /* ============================================================
-   サイドバーの幅調整（スマホ幅では縦並びになるので高さを調整）
-   境目のつまみをドラッグ / 矢印キーで変更、ダブルクリックで既定に戻す
+   ドロワー（サイドバー）のサイズ調整
+   PC は左端のドロワーの幅、スマホ幅は下から出るシートの高さを変える
+   縁のつまみをドラッグ / 矢印キーで変更、ダブルクリックで既定に戻す
    地図の描き直しは main.js の ResizeObserver が自動で行う
    ============================================================ */
 const resizer = document.getElementById("sideResizer");
 const mainEl = document.querySelector("main");
-const narrowLayout = matchMedia("(max-width: 860px)");
-const SIDE_SIZE_KEY = { w: "geolearner.sideWidth", h: "geolearner.sideHeight" };
-const SIDE_MIN = { w: 240, h: 120 }; // サイドバーの最小サイズ
-const MAP_MIN = { w: 280, h: 140 }; // 地図側に最低限残すサイズ（CSS の max-width / max-height と同じ値）
 
-// 横並びなら幅（w）、縦並びなら高さ（h）を調整する
+const SIDE_SIZE_KEY = { w: "geolearner.sideWidth", h: "geolearner.sideHeight" };
+const SIDE_MIN = { w: 240, h: 120 }; // ドロワーの最小サイズ
+const MAP_MIN = { w: 280, h: 140 }; // 地図側に最低限残すサイズ（CSS の --drawer-w / --drawer-h と同じ値）
+
+// PC は幅（w）、スマホ幅は高さ（h）を調整する
 function sideAxis() {
-  return narrowLayout.matches ? "h" : "w";
+  return NARROW_LAYOUT.matches ? "h" : "w";
 }
 
 function setSideSize(axis, px) {
@@ -101,4 +102,4 @@ for (const axis of ["w", "h"]) {
   }
 }
 updateResizerOrientation();
-narrowLayout.addEventListener("change", updateResizerOrientation);
+NARROW_LAYOUT.addEventListener("change", updateResizerOrientation);

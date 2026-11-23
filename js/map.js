@@ -16,6 +16,16 @@ let W = 0,
   DPR = 1,
   pickDirty = true;
 const T = { k: 1, x: 0, y: 0 }; // 単位座標 → 画面: px = u*k + x
+const NARROW_LAYOUT = matchMedia("(max-width: 860px)"); // スマホ幅（CSS のブレークポイントと同じ）
+
+// ドロワーが地図に重なっている分（PC は左、スマホ幅は下）。中心合わせやパンの範囲はこれを除いて考える
+function mapInset() {
+  const s = document.getElementById("side").getBoundingClientRect();
+  const m = cv.getBoundingClientRect();
+  return NARROW_LAYOUT.matches
+    ? { left: 0, bottom: Math.max(0, m.bottom - s.top) }
+    : { left: Math.max(0, s.right - m.left), bottom: 0 };
+}
 
 function css(v) {
   return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
@@ -59,21 +69,27 @@ function resize() {
   draw();
 }
 function fitWorld() {
+  const { left, bottom } = mapInset();
+  const vw = W - left,
+    vh = H - bottom; // ドロワーに隠れていない範囲
   const yTop = proj(0, 83)[1],
     yBot = proj(0, -58)[1];
-  const k = Math.min(W / 1.0, H / (yBot - yTop));
+  const k = Math.min(vw / 1.0, vh / (yBot - yTop));
   T.k = k;
-  T.x = W / 2 - 0.5 * k;
-  T.y = H / 2 - ((yTop + yBot) / 2) * k;
+  T.x = left + vw / 2 - 0.5 * k;
+  T.y = vh / 2 - ((yTop + yBot) / 2) * k;
   clampT();
 }
 function clampT() {
+  const { left, bottom } = mapInset();
+  const vw = W - left,
+    vh = H - bottom;
   T.k = Math.max(1, Math.min(60000, T.k));
-  const minK = Math.min(W, H) * 0.35;
+  const minK = Math.min(vw, vh) * 0.35;
   if (T.k < minK) T.k = minK;
-  T.x = Math.min(W * 0.4, Math.max(W * 0.6 - T.k, T.x));
+  T.x = Math.min(left + vw * 0.4, Math.max(left + vw * 0.6 - T.k, T.x));
   const h = T.k;
-  T.y = Math.min(H * 0.4, Math.max(H * 0.6 - h, T.y));
+  T.y = Math.min(vh * 0.4, Math.max(vh * 0.6 - h, T.y));
 }
 
 function paint(c, scale, withStroke) {
@@ -104,11 +120,23 @@ function paint(c, scale, withStroke) {
     }
   }
   if (withStroke) {
-    for (const f of [hovered, selected]) {
-      if (!f) continue;
-      c.strokeStyle = f === selected ? css("--ink") : css("--accent");
-      c.lineWidth = (f === selected ? 2.4 : 1.8) / T.k;
-      c.stroke(f.path);
+    c.lineJoin = "round";
+    // ホバー中の国: 塗り色（アクセントの青と同じ色の国もある）に埋もれないよう、文字色で縁取る
+    if (hovered && hovered !== selected) {
+      c.globalAlpha = 0.6;
+      c.strokeStyle = css("--ink");
+      c.lineWidth = 1.6 / T.k;
+      c.stroke(hovered.path);
+      c.globalAlpha = 1;
+    }
+    // 選択中の国: 背景色の縁取り＋文字色の太線。どの塗り色・隣国の上でも境目が見えるように
+    if (selected) {
+      c.strokeStyle = css("--surface");
+      c.lineWidth = 6 / T.k;
+      c.stroke(selected.path);
+      c.strokeStyle = css("--ink");
+      c.lineWidth = 3 / T.k;
+      c.stroke(selected.path);
     }
   }
   c.restore();

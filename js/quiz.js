@@ -2,11 +2,7 @@
    クイズ
    ============================================================ */
 const QPOOL = FEATURES.filter((f) => f.data && (f.data.keys || []).length && f.data.sv !== "none");
-let quiz = null,
-  score = 0,
-  asked = 0,
-  streak = 0,
-  best = 0;
+let quiz = null;
 function newQuiz() {
   let f;
   do {
@@ -57,9 +53,6 @@ function renderQuiz() {
   bar.innerHTML =
     '<div class="qhead"><span>' +
     t("quiz.prompt") +
-    "</span>" +
-    '<span class="sc">' +
-    t("quiz.score", score, asked, streak, best) +
     "</span></div>" +
     '<div class="qbody">' +
     hintList
@@ -71,7 +64,7 @@ function renderQuiz() {
     (quiz.done
       ? '<button class="btn primary" id="qnext">' + t("quiz.next") + "</button>"
       : '<button class="btn" id="qhint">' +
-        t("quiz.moreHint", quiz.hints) +
+        t("quiz.moreHint") +
         "</button>" +
         '<button class="btn" id="qgive">' +
         t("quiz.giveUp") +
@@ -107,13 +100,6 @@ function quizResultHTML() {
 function finishQuiz(f) {
   if (!quiz || quiz.done) return;
   const correct = f && f.name === quiz.f.name;
-  asked++;
-  if (correct) {
-    const pt = Math.max(1, 5 - quiz.hints);
-    score += pt;
-    streak++;
-    best = Math.max(best, streak);
-  } else streak = 0;
   quiz.done = true;
   quiz.hints = 4;
   // 言語を切り替えて描き直しても結果が消えないよう、状態として持っておく

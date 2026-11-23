@@ -69,13 +69,11 @@ const UI_TEXT = {
     "quiz.intro":
       '<div class="ph"><p style="font-size:15px;color:var(--ink);font-weight:600;margin:0 0 8px">' +
       "クイズモード</p>手がかりを読んで、その国を<b>地図上でクリック</b>してください。<br>" +
-      "ヒントを増やすほど得点は下がります（4点→1点）。<br><br>" +
+      "手がかりが足りなければ「ヒントを追加」で増やせます。<br><br>" +
       '<span style="color:var(--ink-3);font-size:12px">「地図」タブに戻ると通常モードに戻ります。</span></div>',
     "quiz.prompt": "この手がかりの国を地図でクリック",
-    "quiz.score": (score, asked, streak, best) =>
-      score + " / " + asked + "　連続 " + streak + "（最高 " + best + "）",
     "quiz.next": "次の問題 →",
-    "quiz.moreHint": (cost) => "ヒントを追加（−" + cost + "）",
+    "quiz.moreHint": "ヒントを追加",
     "quiz.giveUp": "答えを見る",
     "quiz.correct": (answer) => "正解！ " + answer,
     "quiz.wrong": (answer) => "正解は " + answer,
@@ -161,13 +159,11 @@ const UI_TEXT = {
     "quiz.intro":
       '<div class="ph"><p style="font-size:15px;color:var(--ink);font-weight:600;margin:0 0 8px">' +
       "Quiz mode</p>Read the clues and <b>click that country on the map</b>.<br>" +
-      "Each extra hint lowers the score (4 pts → 1 pt).<br><br>" +
+      'Need more clues? Use "Add a hint".<br><br>' +
       '<span style="color:var(--ink-3);font-size:12px">Go back to the "Map" tab to leave quiz mode.</span></div>',
     "quiz.prompt": "CLICK THE COUNTRY THAT MATCHES THESE CLUES",
-    "quiz.score": (score, asked, streak, best) =>
-      score + " / " + asked + " · Streak " + streak + " (best " + best + ")",
     "quiz.next": "Next question →",
-    "quiz.moreHint": (cost) => "Add a hint (−" + cost + ")",
+    "quiz.moreHint": "Add a hint",
     "quiz.giveUp": "Show answer",
     "quiz.correct": (answer) => "Correct! " + answer,
     "quiz.wrong": (answer) => "The answer was " + answer,
